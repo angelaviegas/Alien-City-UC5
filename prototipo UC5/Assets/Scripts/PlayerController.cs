@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
 	// Use this for initialization
 	private Animator anim;
@@ -10,12 +11,13 @@ public class PlayerController : MonoBehaviour {
 
 	public SpriteRenderer sr2d;
 	public Transform posPe;
-	public int tipoArma = 0;
+	public int tipoArma1 = 0;
 	[HideInInspector] public bool tocaChao = false;
 	[HideInInspector] public bool jump;
 	//public int situacao;
 	public float Velocidade;
 	public float ForcaPulo = 1000f;
+	public float trocaArma;
 	[HideInInspector] public bool viradoDireita = true;
 
 	public Image vida;
@@ -36,40 +38,18 @@ public class PlayerController : MonoBehaviour {
 			{
 				jump = true;
 			}
-			if (jump)
+		}
+		if (Input.GetKeyDown(KeyCode.E))
 		{
-			anim.SetTrigger("pula");
-			rb2d.AddForce(new Vector2(0f, ForcaPulo));
-			jump = false;
+			MudancaDeArma();Debug.Log(tipoArma1);
 		}
-		}
-		//Implementar Pulo Aqui! 
-
-		if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-		{
-			anim.SetTrigger("corre");
-			viradoDireita = true;
-			transform.position += transform.right * Time.deltaTime;
-			sr2d.flipX = false;
-		}
-		else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-		{
-			anim.SetTrigger("corre");
-			viradoDireita = false;
-			transform.position -= transform.right * Time.deltaTime;
-			sr2d.flipX = true;
-		}
-		else
-		{
-			anim.SetTrigger("parado");
-		}
-
 	}
-	/*
+
 	void FixedUpdate()
 	{
 		float translationY = 0;
 		float translationX = Input.GetAxis("Horizontal") * Velocidade;
+		trocaArma = translationX;
 		transform.Translate(translationX, translationY, 0);
 		transform.Rotate(0, 0, 0);
 		if (translationX != 0 && tocaChao)
@@ -80,19 +60,20 @@ public class PlayerController : MonoBehaviour {
 		{
 			anim.SetTrigger("parado");
 		}
-		
-	}
-		//Programar o pulo Aqui! 
-		/*
-		if (translationX > 0 && !viradoDireita) 
+		if (jump)
 		{
-			Flip ();
+			anim.SetTrigger("pula");
+			rb2d.AddForce(new Vector2(0f, ForcaPulo));
+			jump = false;
 		}
-		else if (translationX < 0 && viradoDireita) 
+		if (translationX > 0 && !viradoDireita)
 		{
 			Flip();
 		}
-
+		else if (translationX < 0 && viradoDireita)
+		{
+			Flip();
+		}
 	}
 	void Flip()
 	{
@@ -101,5 +82,35 @@ public class PlayerController : MonoBehaviour {
 		escala.x *= -1;
 		transform.localScale = escala;
 	}
-*/	
+	private void MudancaDeArma()
+	{
+		tipoArma1++;
+		
+		switch (tipoArma1)
+		{
+			case 1:
+				if (trocaArma == 0 && tocaChao)
+				{
+					anim.SetTrigger("paradoAzul");
+				}
+				else if (trocaArma != 0 && tocaChao)
+				{
+					anim.SetTrigger("correrAzul");
+				}
+				break;
+			case 2:
+				if (trocaArma == 0 && tocaChao)
+				{
+					anim.SetTrigger("paradolaranja");
+				}
+				else if (trocaArma != 0 && tocaChao)
+				{
+					anim.SetTrigger("correrLaranja");
+				}
+				break;
+			default:
+				tipoArma1 = 0;
+				break;
+		}
+	}
 }

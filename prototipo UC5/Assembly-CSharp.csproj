@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Arma.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Tiro.cs" />
+    <Compile Include="Assets\Scripts\tipoArma1.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.25f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
